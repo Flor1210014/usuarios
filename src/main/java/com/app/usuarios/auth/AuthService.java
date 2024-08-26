@@ -1,5 +1,8 @@
 package com.app.usuarios.auth;
 
+import java.sql.Date;
+
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,15 +10,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.usuarios.jwt.JwtService;
+
+import ch.qos.logback.classic.Logger;
+import lombok.RequiredArgsConstructor;
+
 import com.app.usuarios.entity.Role;
 import com.app.usuarios.entity.Usuario;
 import com.app.usuarios.entity.UserRepository;
 
-import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+	
+
 
     private final UserRepository userRepository;
     private final JwtService jwtService = new JwtService();
@@ -33,11 +41,28 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
+    	System.out.println(request);
+    	System.out.println(request);
     	Usuario user = Usuario.builder()
-            .username(request.getUsername())
-            .password(passwordEncoder.encode( request.getPassword()))
-            .role(Role.USER)
-            .build();
+    			.login(request.getLogin())
+    			.username(request.getUsername())
+    			.password(passwordEncoder.encode( request.getPassword()))
+	            .nombre(request.getNombre())
+	            .client(request.getClient())
+		    	.email(request.getEmail())
+		    	.fechaalta(request.getFechaalta())
+		    	.fechabaja(request.getFechabaja())
+		    	.status(request.getStatus())
+		    	.intentos(request.getIntentos())
+		    	.fecharevocado(request.getFecharevocado())
+		    	.fecha_vigencia(request.getFecha_vigencia())
+		    	.no_acceso(request.getNo_acceso())
+		    	.apellido_paterno(request.getApellido_paterno())
+		    	.apellido_materno(request.getApellido_materno())
+		    	.area(request.getArea())
+		    	.fechamodificacion(request.getFechamodificacion())
+		    	.role(Role.USER)
+	        .build();
 
         userRepository.save(user);
 

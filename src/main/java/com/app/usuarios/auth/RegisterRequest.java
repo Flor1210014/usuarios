@@ -1,5 +1,16 @@
 package com.app.usuarios.auth;
 
+import java.sql.Date;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+
+import com.app.usuarios.entity.Role;
+import com.app.usuarios.entity.Usuario;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,40 +21,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequest {
-    String username;
-    String password;
-    String firstname;
-    String lastname;
-    String country;
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	} 
+	
+	String login;
+	String username;
+	String password;
+	String nombre;
+	float client;
+	String email;
+	Date fechaalta;
+	Date fechabaja;
+	char status;
+	float intentos;
+	Date fecharevocado;
+	Date fecha_vigencia;
+	int no_acceso;
+	String apellido_paterno;
+	String apellido_materno;
+	int area;
+	Date fechamodificacion;
+    Role role;
+	
     
 }
