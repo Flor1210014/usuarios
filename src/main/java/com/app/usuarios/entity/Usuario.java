@@ -2,6 +2,7 @@ package com.app.usuarios.entity;
 
 import java.sql.Date;
 import java.util.Collection;
+import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,14 +10,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.AssertFalse.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,16 +29,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = {"login"})})
+@Table(name="usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class Usuario implements UserDetails {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name = "login",  nullable = false, length = 20)
+    @Id
+    @GeneratedValue
+    Integer id;
+    @Basic
+    
+    @Column(name = "login",  nullable = false, length = 20)
 	private String login;
 	
 	@Column(name = "username",  nullable = false, length = 20)
@@ -85,12 +85,10 @@ public class Usuario implements UserDetails {
 	
 	@Column(name="fechamodificacion")
 	private Date fechamodificacion;
-	
-	@Enumerated(EnumType.STRING) 
+    @Enumerated(EnumType.STRING) 
     Role role;
-	
-	
-	@Override
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
       return List.of(new SimpleGrantedAuthority((role.name())));
     }
@@ -110,5 +108,4 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-	
 }
