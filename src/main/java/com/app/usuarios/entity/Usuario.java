@@ -42,7 +42,7 @@ public class Usuario implements UserDetails {
 	@Column(name = "username",  nullable = false, length = 20)
 	private String username;
 	
-	@Column(name = "password", nullable = false, length = 30)
+	@Column(name = "password", nullable = false, length = 150)
 	private String password;
 	
 	@Column(name = "nombre", nullable = false, length = 50)
