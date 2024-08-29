@@ -16,6 +16,6 @@ public interface UsuarioService {
 	
 	public Usuario findByLogin(String login);
 	
-	public void delete(Usuario usuario);
+	public Usuario delete(Usuario usuario);
 
 }

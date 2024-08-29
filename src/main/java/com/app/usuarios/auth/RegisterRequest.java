@@ -1,6 +1,6 @@
 package com.app.usuarios.auth;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,8 +1,9 @@
 package com.app.usuarios.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Collection;
 import java.util.List;
+
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -94,11 +95,21 @@ public class Usuario implements UserDetails {
     }
     @Override
     public boolean isAccountNonExpired() {
-       return true;
+    	Date fechaActual = new Date();
+
+    	if( this.fecha_vigencia.after(fechaActual)) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    	
+    
     }
     @Override
     public boolean isAccountNonLocked() {
-       return true;
+    	if(this.status == 'A')
+    		return true ;
+    	else return false;
     }
     @Override
     public boolean isCredentialsNonExpired() {

@@ -1,8 +1,11 @@
 package com.app.usuarios.auth;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import org.hibernate.validator.internal.util.logging.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.usuarios.jwt.JwtService;
+import com.app.usuarios.service.UsuarioService;
 
 import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +23,14 @@ import com.app.usuarios.entity.Usuario;
 import com.app.usuarios.entity.UserRepository;
 
 
+
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 	
-
+  	@Autowired
+	private UsuarioService usuarioService;
 
     private final UserRepository userRepository;
     private final JwtService jwtService = new JwtService();
@@ -41,8 +48,7 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-    	System.out.println(request);
-    	System.out.println(request);
+    	Date fechaActual = new Date();
     	Usuario user = Usuario.builder()
     			.login(request.getLogin())
     			.username(request.getUsername())
@@ -50,7 +56,7 @@ public class AuthService {
 	            .nombre(request.getNombre())
 	            .client(request.getClient())
 		    	.email(request.getEmail())
-		    	.fechaalta(request.getFechaalta())
+		    	.fechaalta(fechaActual)
 		    	.fechabaja(request.getFechabaja())
 		    	.status(request.getStatus())
 		    	.intentos(request.getIntentos())
@@ -64,8 +70,9 @@ public class AuthService {
 		    	.role(Role.USER)
 	        .build();
 
-        userRepository.save(user);
+    	userRepository.save(user);
 
+       
         return AuthResponse.builder()
             .token(jwtService.getToken(user))
             .build();
